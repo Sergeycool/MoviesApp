@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeContainer;
 
     int cacheSize = 10 * 1024 * 1024; // 10 MiB
-
+    //i need add cash for all images and other materials
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
