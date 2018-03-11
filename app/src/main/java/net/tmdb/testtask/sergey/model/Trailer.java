@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp.model;
+package net.tmdb.testtask.sergey.model;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,8 +1,4 @@
-package com.delaroystudios.movieapp.api;
-
-import com.delaroystudios.movieapp.model.MoviesResponse;
-
-import java.io.IOException;
+package net.tmdb.testtask.sergey.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

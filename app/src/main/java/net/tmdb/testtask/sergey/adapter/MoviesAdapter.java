@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp.adapter;
+package net.tmdb.testtask.sergey.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.delaroystudios.movieapp.DetailActivity;
-import com.delaroystudios.movieapp.R;
-import com.delaroystudios.movieapp.model.Movie;
+import net.tmdb.testtask.sergey.DetailActivity;
+import net.tmdb.testtask.sergey.R;
+import net.tmdb.testtask.sergey.model.Movie;
 
 import java.util.List;
 

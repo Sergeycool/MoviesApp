@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp;
+package net.tmdb.testtask.sergey;
 
 import org.junit.Test;
 

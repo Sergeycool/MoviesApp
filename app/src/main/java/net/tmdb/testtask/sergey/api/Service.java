@@ -1,9 +1,7 @@
-package com.delaroystudios.movieapp.api;
+package net.tmdb.testtask.sergey.api;
 
-import android.support.v7.util.SortedList;
-
-import com.delaroystudios.movieapp.model.MoviesResponse;
-import com.delaroystudios.movieapp.model.TrailerResponse;
+import net.tmdb.testtask.sergey.model.MoviesResponse;
+import net.tmdb.testtask.sergey.model.TrailerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

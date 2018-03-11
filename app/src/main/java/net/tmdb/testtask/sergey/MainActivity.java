@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp;
+package net.tmdb.testtask.sergey;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -18,11 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
-import com.delaroystudios.movieapp.adapter.MoviesAdapter;
-import com.delaroystudios.movieapp.adapter.TestAdapter;
-import com.delaroystudios.movieapp.api.Service;
-import com.delaroystudios.movieapp.model.Movie;
-import com.delaroystudios.movieapp.model.MoviesResponse;
+import net.tmdb.testtask.sergey.adapter.MoviesAdapter;
+import net.tmdb.testtask.sergey.adapter.TestAdapter;
+import net.tmdb.testtask.sergey.api.Service;
+import net.tmdb.testtask.sergey.model.Movie;
+import net.tmdb.testtask.sergey.model.MoviesResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                     List<Movie> movies = response.body().getResults();
                     Collections.sort(movies, Movie.BY_NAME_ALPHABETICAL);
-                    //Client.getClient();
 
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     recyclerView.smoothScrollToPosition(0);
@@ -332,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
+        if(mQuery == null) loadJSON1();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -339,6 +339,8 @@ public class MainActivity extends AppCompatActivity {
 
                 mQuery = query;
                 if (query != null) new MovieSearcher().start();
+
+
 
                 return false;
             }

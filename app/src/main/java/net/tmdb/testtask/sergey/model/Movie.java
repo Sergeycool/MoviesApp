@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp.model;
+package net.tmdb.testtask.sergey.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

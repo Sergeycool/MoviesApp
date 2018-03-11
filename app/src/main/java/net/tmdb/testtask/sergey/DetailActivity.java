@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp;
+package net.tmdb.testtask.sergey;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,12 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.delaroystudios.movieapp.adapter.TrailerAdapter;
-import com.delaroystudios.movieapp.api.Client;
-import com.delaroystudios.movieapp.api.Service;
-import com.delaroystudios.movieapp.model.Movie;
-import com.delaroystudios.movieapp.model.Trailer;
-import com.delaroystudios.movieapp.model.TrailerResponse;
+import net.tmdb.testtask.sergey.adapter.TrailerAdapter;
+import net.tmdb.testtask.sergey.api.Client;
+import net.tmdb.testtask.sergey.api.Service;
+import net.tmdb.testtask.sergey.model.Movie;
+import net.tmdb.testtask.sergey.model.Trailer;
+import net.tmdb.testtask.sergey.model.TrailerResponse;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.delaroystudios.movieapp.adapter;
+package net.tmdb.testtask.sergey.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.delaroystudios.movieapp.R;
-import com.delaroystudios.movieapp.model.Movie;
+import net.tmdb.testtask.sergey.R;
+import net.tmdb.testtask.sergey.model.Movie;
 
 import java.util.ArrayList;
 import java.util.List;
