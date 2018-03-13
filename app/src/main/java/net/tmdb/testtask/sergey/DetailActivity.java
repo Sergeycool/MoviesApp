@@ -8,11 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
 import net.tmdb.testtask.sergey.adapter.TrailerAdapter;
 import net.tmdb.testtask.sergey.api.Client;
 import net.tmdb.testtask.sergey.api.Service;
@@ -47,13 +49,13 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         imageView = (ImageView) findViewById(R.id.thumbnail_image_header);
        // nameOfMovie = (TextView) findViewById(R.id.title);
         plotSynopsis = (TextView) findViewById(R.id.plotsynopsis);
-        userRating = (TextView) findViewById(R.id.userrating);
+        userRating = (TextView) findViewById(R.id.user_rating);
         releaseDate = (TextView) findViewById(R.id.releasedate);
 
         Intent intentThatStartedThisActivity = getIntent();
@@ -80,7 +82,7 @@ public class DetailActivity extends AppCompatActivity {
             userRating.setText(rating);
             releaseDate.setText(dateOfRelease);
 
-            //TODO
+
             ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar)).setTitle(movieName);
 
         } else {
@@ -131,10 +133,20 @@ public class DetailActivity extends AppCompatActivity {
                 }
             });
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("Error", e.getMessage());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+//            Intent intent = new Intent(this,MainActivity.class);
+//            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

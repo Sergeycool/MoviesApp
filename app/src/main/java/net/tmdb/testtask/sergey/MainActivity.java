@@ -48,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private String mQuery;
     ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
-
     int cacheSize = 10 * 1024 * 1024; // 10 MiB
-    //i need add cash for all images and other materials
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
         searchView.clearFocus();
 
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
         }
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -112,11 +111,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (mQuery != null) new MovieSearcher().start();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("query", mQuery);
+
+    }
 
 
-        if (mQuery != null){ new MovieSearcher().start();}
 
-        //checkSortOrder();
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+
+        mQuery = savedInstanceState.getString("query");
 
     }
 
@@ -331,7 +345,10 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if(mQuery == null) loadJSON1();
+        if (mQuery == null) loadJSON1();
+        else {
+            new MovieSearcher().start();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -339,8 +356,6 @@ public class MainActivity extends AppCompatActivity {
 
                 mQuery = query;
                 if (query != null) new MovieSearcher().start();
-
-
 
                 return false;
             }

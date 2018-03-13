@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/userrating"
+                android:id="@+id/user_rating"
                 android:drawableLeft="@drawable/ic_rating"
                 android:drawablePadding="@dimen/drawable_icon_padding"
                 android:padding="@dimen/padding_layout"
@@ -63,7 +63,7 @@
                 android:layout_width="368dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/releasedate"
-                android:layout_below="@+id/userrating"
+                android:layout_below="@+id/user_rating"
                 android:drawableLeft="@drawable/ic_calendar"
                 android:drawablePadding="@dimen/drawable_icon_padding"
                 android:layout_marginLeft="@dimen/layout_margin_left"

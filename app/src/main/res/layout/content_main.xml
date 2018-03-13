@@ -14,7 +14,8 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true" />
+        app:iconifiedByDefault="true"
+        android:focusable="false" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
