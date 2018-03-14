@@ -337,15 +337,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Error", t.getMessage());
                     Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
 
-                    List<Movie> cacheMov = cacheDbHelper.getAllQueries();
-
-                    if(!isNetworkAvailable()){
-
-                        for(int i=0;i<cacheMov.size();i++){
-                            cachingData(cacheMov.get(i));
-                        }
-
-                    }
+                    List<Movie> cacheMov = cacheDbHelper.getAllQueries(mQuery);
 
 
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), cacheMov));

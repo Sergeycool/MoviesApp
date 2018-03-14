@@ -83,7 +83,7 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
         db.delete(TableCache.TableEntry.TABLE_NAME, TableCache.TableEntry.COLUMN_MOVIEID+ "=" + id, null);
     }
 
-    public List<Movie> getAllQueries(){
+    public List<Movie> getAllQueries(String query){
         String[] columns = {
                 TableCache.TableEntry._ID,
                 TableCache.TableEntry.COLUMN_MOVIEID,
@@ -102,11 +102,11 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(TableCache.TableEntry.TABLE_NAME,
                 columns,
+                "title = ?",
+                new String[]{query},
                 null,
                 null,
-                null,
-                null,
-                null);//sortOrder);
+                null);
 
         if (cursor.moveToFirst()){
             do {
