@@ -21,12 +21,12 @@ import android.widget.Toast;
 import net.tmdb.testtask.sergey.adapter.MoviesAdapter;
 import net.tmdb.testtask.sergey.adapter.TestAdapter;
 import net.tmdb.testtask.sergey.api.Service;
+import net.tmdb.testtask.sergey.datacache.DataCacheDbHelper;
 import net.tmdb.testtask.sergey.model.Movie;
 import net.tmdb.testtask.sergey.model.MoviesResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Cache;
@@ -45,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private MoviesAdapter adapter;
     private List<Movie> movieList;
     private SearchView searchView;
+    private DataCacheDbHelper cacheDbHelper;
     private String mQuery;
-    ProgressDialog pd;
     private SwipeRefreshLayout swipeContainer;
+    ProgressDialog pd;
+    Movie record;
     int cacheSize = 10 * 1024 * 1024; // 10 MiB
 
 
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -122,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putString("query", mQuery);
 
     }
-
 
 
     @Override
@@ -141,69 +143,87 @@ public class MainActivity extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void loadJSON() {
+//    private void loadJSON() {
+//
+//        try {
+//            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
+//                Toast.makeText(getApplicationContext(), "Please obtain API Key firstly from themoviedb.org", Toast.LENGTH_SHORT).show();
+//                pd.dismiss();
+//                return;
+//            }
+//            Cache cache = new Cache(getCacheDir(), cacheSize);
+//
+//            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                    .cache(cache)
+//                    .addInterceptor(new Interceptor() {
+//                        @Override
+//                        public okhttp3.Response intercept(Interceptor.Chain chain)
+//                                throws IOException {
+//                            Request request = chain.request();
+//                            if (!isNetworkAvailable()) {
+//                                int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale \
+//                                request = request
+//                                        .newBuilder()
+//                                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+//                                        .build();
+//                            }
+//                            return chain.proceed(request);
+//                        }
+//                    })
+//                    .build();
+//
+//            Retrofit.Builder builder = new Retrofit.Builder()
+//                    .baseUrl("http://api.themoviedb.org/3/")
+//                    .client(okHttpClient)
+//                    .addConverterFactory(GsonConverterFactory.create());
+//
+//            final Retrofit retrofit = builder.build();
+//            Service apiService = retrofit.create(Service.class);
+//
+//
+//            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+//            call.enqueue(new Callback<MoviesResponse>() {
+//                @Override
+//                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+//                    List<Movie> movies = response.body().getResults();
+//                    Collections.sort(movies, Movie.BY_NAME_ALPHABETICAL);
+//
+//                    recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
+//                    recyclerView.smoothScrollToPosition(0);
+//                    if (swipeContainer.isRefreshing()) {
+//                        swipeContainer.setRefreshing(false);
+//                    }
+//
+//                }
+//
+//                @Override
+//                public void onFailure(Call<MoviesResponse> call, Throwable t) {
+//                    Log.d("Error", t.getMessage());
+//                    Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        } catch (Exception e) {
+//            Log.d("Error", e.getMessage());
+//            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-        try {
-            if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Please obtain API Key firstly from themoviedb.org", Toast.LENGTH_SHORT).show();
-                pd.dismiss();
-                return;
-            }
-            Cache cache = new Cache(getCacheDir(), cacheSize);
+    private void cachingData(Movie movies){
 
-            OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                    .cache(cache)
-                    .addInterceptor(new Interceptor() {
-                        @Override
-                        public okhttp3.Response intercept(Interceptor.Chain chain)
-                                throws IOException {
-                            Request request = chain.request();
-                            if (!isNetworkAvailable()) {
-                                int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale \
-                                request = request
-                                        .newBuilder()
-                                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
-                                        .build();
-                            }
-                            return chain.proceed(request);
-                        }
-                    })
-                    .build();
+            cacheDbHelper = new DataCacheDbHelper(getActivity());
 
-            Retrofit.Builder builder = new Retrofit.Builder()
-                    .baseUrl("http://api.themoviedb.org/3/")
-                    .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create());
+            record = movies;
 
-            final Retrofit retrofit = builder.build();
-            Service apiService = retrofit.create(Service.class);
+            Double rate = record.getVoteAverage();
 
+            record.setId(record.getId());
+            record.setOriginalTitle(record.getTitle());
+            record.setPosterPath(record.getPosterPath());
+            record.setVoteAverage(rate);
+            record.setOverview(record.getOverview());
 
-            Call<MoviesResponse> call = apiService.getPopularMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
-            call.enqueue(new Callback<MoviesResponse>() {
-                @Override
-                public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
-                    List<Movie> movies = response.body().getResults();
-                    Collections.sort(movies, Movie.BY_NAME_ALPHABETICAL);
+            cacheDbHelper.addQuery(record);
 
-                    recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
-                    recyclerView.smoothScrollToPosition(0);
-                    if (swipeContainer.isRefreshing()) {
-                        swipeContainer.setRefreshing(false);
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<MoviesResponse> call, Throwable t) {
-                    Log.d("Error", t.getMessage());
-                    Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.d("Error", e.getMessage());
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void loadJSON1() {
@@ -271,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void searchTitle(String query) {
+    private void searchTitle(final String query) {
 
         try {
             if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
@@ -279,6 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 pd.dismiss();
                 return;
             }
+
 
             OkHttpClient client = new OkHttpClient();
 
@@ -295,7 +316,13 @@ public class MainActivity extends AppCompatActivity {
             call.enqueue(new Callback<MoviesResponse>() {
                 @Override
                 public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+
+
                     List<Movie> movies = response.body().getResults();
+
+                    for(int i=0;i<movies.size();i++){
+                        cachingData(movies.get(i));
+                    }
 
                     recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), movies));
                     recyclerView.smoothScrollToPosition(0);
@@ -309,6 +336,25 @@ public class MainActivity extends AppCompatActivity {
                 public void onFailure(Call<MoviesResponse> call, Throwable t) {
                     Log.d("Error", t.getMessage());
                     Toast.makeText(MainActivity.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+
+                    List<Movie> cacheMov = cacheDbHelper.getAllQueries();
+
+                    if(!isNetworkAvailable()){
+
+                        for(int i=0;i<cacheMov.size();i++){
+                            cachingData(cacheMov.get(i));
+                        }
+
+                    }
+
+
+                    recyclerView.setAdapter(new MoviesAdapter(getApplicationContext(), cacheMov));
+                    recyclerView.smoothScrollToPosition(0);
+                    if (swipeContainer.isRefreshing()) {
+                        swipeContainer.setRefreshing(false);
+                    }
+
+
                 }
             });
         } catch (NullPointerException e) {
@@ -341,14 +387,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
 
         if (mQuery == null) loadJSON1();
-        else {
-            new MovieSearcher().start();
-        }
+        if(mQuery != null && (movieList.size() == 0)) new MovieSearcher().start();
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Movie implements Parcelable {
@@ -62,13 +61,6 @@ public class Movie implements Parcelable {
 
     }
 
-    public static final Comparator<Movie> BY_NAME_ALPHABETICAL = new Comparator<Movie>() {
-        @Override
-        public int compare(Movie movie, Movie t1) {
-
-            return movie.originalTitle.compareTo(t1.originalTitle);
-        }
-    };
 
     public String getPosterPath() {
         return  posterPath;
