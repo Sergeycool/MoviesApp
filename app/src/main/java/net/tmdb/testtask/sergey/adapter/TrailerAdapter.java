@@ -50,9 +50,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView title;
-        public ImageView thumbnail;
+        ImageView thumbnail;
 
-        public MyViewHolder(View view){
+        MyViewHolder(View view){
             super(view);
             title = (TextView) view.findViewById(R.id.title);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
@@ -62,7 +62,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
                 public void onClick(View v){
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
-                        Trailer clickedDataItem = trailerList.get(pos);
                         String videoId = trailerList.get(pos).getKey();
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v="+videoId));
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

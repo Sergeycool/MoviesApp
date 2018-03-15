@@ -4,7 +4,7 @@ package net.tmdb.testtask.sergey.datacache;
 import android.provider.BaseColumns;
 
 public class TableCache {
-    public static final class TableEntry implements BaseColumns {
+    static final class TableEntry implements BaseColumns {
 
         static final String TABLE_NAME = "data";
         static final String COLUMN_MOVIEID = "movieid";

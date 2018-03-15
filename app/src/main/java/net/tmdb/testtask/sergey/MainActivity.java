@@ -1,6 +1,5 @@
 package net.tmdb.testtask.sergey;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.content.ContextWrapper;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -268,14 +266,11 @@ public class MainActivity extends AppCompatActivity {
                                         String s1 = test.get(j).getOriginalTitle();
                                         String s2 = movies.get(i).getOriginalTitle();
 
-
                                         if (!Objects.equals(s1, s2)) cachingData(movies.get(i));
-
 
                                     }
                                 }
-
-                            } else for (int i = 0; i < movies.size(); i++) cachingData(movies.get(i));
+                            }
 
                     } catch (NullPointerException e) {
                         for (int i = 0; i < movies.size(); i++) cachingData(movies.get(i));

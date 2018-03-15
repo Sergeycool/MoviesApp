@@ -78,11 +78,6 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteQuery(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TableCache.TableEntry.TABLE_NAME, TableCache.TableEntry.COLUMN_MOVIEID+ "=" + id, null);
-    }
-
     public List<Movie> getAllQueries(String query){
         String[] columns = {
                 TableCache.TableEntry._ID,

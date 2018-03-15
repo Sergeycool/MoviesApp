@@ -35,7 +35,6 @@ public class DetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TrailerAdapter adapter;
     private List<Trailer> trailerList;
-   // private final AppCompatActivity activity = DetailActivity.this;
 
 
     Movie movie;
@@ -52,7 +51,6 @@ public class DetailActivity extends AppCompatActivity {
 
 
         imageView = (ImageView) findViewById(R.id.thumbnail_image_header);
-       // nameOfMovie = (TextView) findViewById(R.id.title);
         plotSynopsis = (TextView) findViewById(R.id.plotsynopsis);
         userRating = (TextView) findViewById(R.id.user_rating);
         releaseDate = (TextView) findViewById(R.id.releasedate);
@@ -76,7 +74,6 @@ public class DetailActivity extends AppCompatActivity {
                     .placeholder(R.drawable.ic_placeholder)
                     .into(imageView);
 
-            //  nameOfMovie.setText(movieName);
             plotSynopsis.setText(synopsis);
             userRating.setText(rating);
             releaseDate.setText(dateOfRelease);

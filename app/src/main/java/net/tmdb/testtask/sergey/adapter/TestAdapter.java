@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import net.tmdb.testtask.sergey.R;
@@ -53,11 +52,10 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.MyViewHolder> 
         return movie.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
-        public TextView title, userrating;
-        ImageView image;
+    class MyViewHolder extends RecyclerView.ViewHolder{
+        TextView title, userrating;
 
-        public MyViewHolder(View view){
+        MyViewHolder(View view){
 
             super(view);
             title = (TextView) view.findViewById(R.id.title);
