@@ -22,11 +22,6 @@ public class Client {
         Client.retrofit = retrofit;
     }
 
-//    public MoviesResponse getClientSearch(String search, int page) throws IOException {
-//        return this.api
-//                .getSearchedMovies(Service.API_KEY, search, page).execute()
-//                .body();
-//    }
 
     public static Retrofit getClient(){
 

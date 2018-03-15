@@ -44,8 +44,8 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CACHE_TABLE = "CREATE TABLE " + TableCache.TableEntry.TABLE_NAME + " (" +
                 TableCache.TableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TableCache.TableEntry.COLUMN_MOVIEID + " INTEGER, " +
-                //TableCache.TableEntry.COLUMN_QUERY + "TEXT NOT NULL, " +
                 TableCache.TableEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                TableCache.TableEntry.COLUMN_DATE + " TEXT NOT NULL, " +
                 TableCache.TableEntry.COLUMN_USERRATING + " REAL NOT NULL, " +
                 TableCache.TableEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
                 TableCache.TableEntry.COLUMN_PLOT_SYNOPSIS + " TEXT NOT NULL" +
@@ -67,8 +67,8 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(TableCache.TableEntry.COLUMN_MOVIEID, movie.getId());
-       // values.put(TableCache.TableEntry.COLUMN_QUERY, query);
         values.put(TableCache.TableEntry.COLUMN_TITLE, movie.getOriginalTitle());
+        values.put(TableCache.TableEntry.COLUMN_DATE, movie.getReleaseDate());
         values.put(TableCache.TableEntry.COLUMN_USERRATING, movie.getVoteAverage());
         values.put(TableCache.TableEntry.COLUMN_POSTER_PATH, movie.getPosterPath());
         values.put(TableCache.TableEntry.COLUMN_PLOT_SYNOPSIS, movie.getOverview());
@@ -87,14 +87,13 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
         String[] columns = {
                 TableCache.TableEntry._ID,
                 TableCache.TableEntry.COLUMN_MOVIEID,
-               // TableCache.TableEntry.COLUMN_QUERY,
+                TableCache.TableEntry.COLUMN_DATE,
                 TableCache.TableEntry.COLUMN_TITLE,
                 TableCache.TableEntry.COLUMN_USERRATING,
                 TableCache.TableEntry.COLUMN_POSTER_PATH,
                 TableCache.TableEntry.COLUMN_PLOT_SYNOPSIS
 
         };
-        //String sortOrder = TableCache.TableEntry._ID + " ASC";
 
         List<Movie> cacheList = new ArrayList<>();
 
@@ -112,8 +111,8 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
             do {
                 Movie movie = new Movie();
                 movie.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_MOVIEID))));
+                movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_DATE)));
                 movie.setOriginalTitle(cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_TITLE)));
-                //cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_QUERY));
                 movie.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_USERRATING))));
                 movie.setPosterPath(cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_POSTER_PATH)));
                 movie.setOverview(cursor.getString(cursor.getColumnIndex(TableCache.TableEntry.COLUMN_PLOT_SYNOPSIS)));
@@ -127,7 +126,6 @@ public class DataCacheDbHelper extends SQLiteOpenHelper {
 
         return cacheList;
     }
-
 
 }
 
