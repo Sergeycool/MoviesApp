@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loadJSON1() {
+    private void loadJSON() {
 
         try {
             if (BuildConfig.THE_MOVIE_DB_API_TOKEN.isEmpty()) {
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        if (mQuery == null) loadJSON1();
+        if (mQuery == null) loadJSON();
         if(mQuery != null && (movieList.size() == 0)) new MovieSearcher().start();
 
 

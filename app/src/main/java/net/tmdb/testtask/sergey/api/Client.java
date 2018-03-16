@@ -10,19 +10,6 @@ public class Client {
     private static Retrofit retrofit = null;
     private Service api;
 
-    public static String getBaseUrl() {
-        return BASE_URL;
-    }
-
-    public static Retrofit getRetrofit() {
-        return retrofit;
-    }
-
-    public static void setRetrofit(Retrofit retrofit) {
-        Client.retrofit = retrofit;
-    }
-
-
     public static Retrofit getClient(){
 
         if (retrofit == null){
